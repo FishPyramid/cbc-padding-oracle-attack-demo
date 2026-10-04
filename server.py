@@ -7,7 +7,6 @@ from Crypto.Util.Padding import unpad
 from config import *
 import time
 
-# mock database
 login_db = {
     "user": "password",
     "fella": "cbods123",
@@ -33,7 +32,6 @@ def handle_client(client_socket):
 
     cmd_id, payload_len = struct.unpack('!HH', header)
 
-    # Optional safety check: guard against absurdly large payloads
     if payload_len > 4096:
         return
 
@@ -64,9 +62,7 @@ def login(data):
         json_str = pt.decode('utf-8')
         login_data = json.loads(json_str)
         user, password, login_time = login_data
-        if time.time - login_time > 10:
-            return RESP_AUTH_FAIL
-        if user in login_db and login_db[user] == password:
+        if user in login_db and login_db[user] == password and time.time() - login_time <= 10:
             return RESP_SUCCESS
         else:
             return RESP_AUTH_FAIL

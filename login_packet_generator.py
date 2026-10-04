@@ -5,6 +5,8 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from config import KEY, OPCODE_LOGIN_REQ
 import time
+from server import login_db
+import sys
 
 def generate_login_packet(usr, pwd):
     data = json.dumps((usr,pwd,time.time())).encode('utf-8')
@@ -19,7 +21,12 @@ def generate_login_packet(usr, pwd):
 
     return header + payload
 
+def generate_all():
+    for a in login_db:
+        print(generate_login_packet(a,login_db[a]))
+
 if __name__ == "__main__":
-    username = input("enter username: ")
-    password = input("enter password: ")
-    print(generate_login_packet(username,password))
+    if len(sys.argv) > 1:
+        print(generate_login_packet(sys.argv[1],sys.argv[2]))
+    else:
+        generate_all()

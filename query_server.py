@@ -1,5 +1,5 @@
 import socket
-from config import *
+from config import HOST, PORT
 
 def query_server(packet):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
