@@ -59,6 +59,9 @@ def login(data):
         ct = b64decode(b64['ciphertext'])
         cipher = AES.new(KEY, AES.MODE_CBC, iv)
         pt = unpad(cipher.decrypt(ct), AES.block_size) # throws ValueError if ct has incorrect padding
+    except ValueError:
+        return RESP_PADDING_ERROR
+    try:
         json_str = pt.decode('utf-8')
         login_data = json.loads(json_str)
         user, password, login_time = login_data
@@ -66,8 +69,8 @@ def login(data):
             return RESP_SUCCESS
         else:
             return RESP_AUTH_FAIL
-    except ValueError:
-        return RESP_PADDING_ERROR
+    except (UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError):
+        return RESP_AUTH_FAIL
 
 if __name__ == "__main__":
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
