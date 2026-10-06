@@ -1,4 +1,4 @@
-from config import RESP_AUTH_FAIL, RESP_PADDING_ERROR, OPCODE_LOGIN_REQ # key not given
+from config import RESP_PADDING_ERROR, OPCODE_LOGIN_REQ # key not given
 from Crypto.Cipher import AES
 from query_server import query_server
 from base64 import b64decode, b64encode

@@ -10,7 +10,10 @@ import time
 login_db = {
     "user": "password",
     "fella": "cbods123",
-    "folk99": "ough_1ough$"
+    "folk99": "ough_1ough$",
+    "hi_hello": "donthackmeplease:(",
+    "gloop1000": "gloop77gloop",
+    "admin": "im_admin_hooray"
 }
 
 def recv_all(sock, length):
